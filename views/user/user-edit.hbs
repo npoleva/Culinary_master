@@ -1,0 +1,85 @@
+<style>
+    .profile-edit-wrapper {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: sans-serif;
+    }
+
+    .profile-edit-wrapper h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .profile-edit-wrapper form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .profile-edit-wrapper label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .profile-edit-wrapper input[type="text"],
+    .profile-edit-wrapper input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn-save,
+    .btn-cancel {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        background-color: white;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        margin-right: 10px;
+    }
+
+    .btn-save:hover,
+    .btn-cancel:hover {
+        background-color: #f0f0f0;
+    }
+
+    .performance-info {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 0.9em;
+        color: gray;
+    }
+</style>
+
+<div class="profile-edit-wrapper">
+    <h1>Редактирование профиля</h1>
+
+    <form action="/user/{{user.id}}/update" method="POST">
+        <div>
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" value="{{user.name}}" required>
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{user.email}}" required>
+        </div>
+
+        <div>
+            <button type="submit" class="btn-save">Сохранить</button>
+            <a href="/user/{{user.id}}" class="btn-cancel">Отмена</a>
+        </div>
+
+        <div class="performance-info">
+            <p>Страница сгенерирована за {{elapsedTime}}</p>
+        </div>
+    </form>
+</div>

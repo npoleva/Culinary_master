@@ -1,0 +1,45 @@
+<a href="/recipe/add">
+    <button>Добавить рецепт</button>
+</a>
+
+{{#each recipes}}
+    <div class="recipe">
+        <h2><a href="/recipe/{{this.id}}">{{this.name}}</a></h2>
+    </div>
+{{else}}
+    <p>Рецептов пока нет:(</p>
+{{/each}}
+
+<div class="performance-info">
+    <p>Страница сгенерирована за {{elapsedTime}}</p>
+</div>
+
+a > button {
+text-decoration: none; /* убирает подчеркивание у текста в кнопке */
+border: none;
+background-color: #d98c3f;
+color: white;
+padding: 10px 18px;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 600;
+font-size: 1rem;
+transition: background-color 0.3s ease;
+}
+
+a > button:hover {
+background-color: #c27c33;
+}
+
+/* И для ссылок в заголовках */
+.recipe h2 a {
+text-decoration: none;
+color: #b9742a;
+transition: color 0.3s ease;
+}
+
+.recipe h2 a:hover {
+color: #a35a1f;
+text-decoration: underline;
+}
+

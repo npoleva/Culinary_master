@@ -1,0 +1,72 @@
+<head>
+    <link rel="stylesheet" href="../outline_v2.css">
+</head>
+<section class="slogan">
+    <h2>Создавайте вкусные блюда из того, что есть</h2>
+</section>
+
+<section class="content">
+    <div class="description">
+        <h3>Добро пожаловать в "Кулинарный мастер"</h3>
+        <p>Наше приложение поможет вам быстро находить рецепты на основе продуктов в вашем холодильнике. Вы сможете создавать и сохранять свои кулинарные шедевры, делиться ими с другими пользователями и легко составлять списки покупок.</p>
+        <nav class="navigation_2">
+            <a href="#" class="cta">Найти рецепт</a>
+            <a href="#" class="cta">Создать рецепт</a>
+            <a href="#" class="cta">Список покупок</a>
+        </nav>
+        <nav class="navigation_2_for_small_screen">
+            <a href="#" class="cta">Найти рецепт</a>
+            <a href="#" class="cta">Создать рецепт</a>
+            <a href="#" class="cta">Список покупок</a>
+        </nav>
+    </div>
+</section>
+
+<section class="features">
+    <div class="feature">
+        <h4>Подбор рецептов</h4>
+        <p>Введите доступные продукты, и мы предложим вам рецепты, которые можно приготовить прямо сейчас.</p>
+    </div>
+    <div class="feature">
+        <h4>Создание рецептов</h4>
+        <p>Создавайте свои собственные рецепты, сохраняйте их и делитесь с другими.</p>
+    </div>
+    <div class="feature">
+        <h4>Список покупок</h4>
+        <p>Формируйте список покупок на основе выбранных рецептов и сортируйте его по категориям.</p>
+    </div>
+</section>
+
+<h2>Лучшие рецепты месяца</h2>
+<section class="recipe-data">
+    <div class="table-container">
+        <table id="recipe-table">
+            <thead>
+            <tr>
+                <th>Название рецепта</th>
+                <th>Количество ингредиентов</th>
+                <th>Время приготовления</th>
+                <th>Калорийность</th>
+                <th>Вид кухни</th>
+                <th>Рейтинг</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="preloader">
+            <img src="loading.gif" alt="Загрузка данных..."></td>
+        </div>
+        <div class="error-message"></div>
+    </div>
+</section>
+<template id="recipe-row-template">
+    <tr>
+        <td class="recipe-name"></td>
+        <td class="ingredients-count"></td>
+        <td class="cook-time"></td>
+        <td class="calories"></td>
+        <td class="cuisine"></td>
+        <td class="rating"></td>
+    </tr>
+</template>

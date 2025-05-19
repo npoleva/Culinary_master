@@ -1,0 +1,103 @@
+<style>
+    .review-details-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: sans-serif;
+    }
+
+    .review-details-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .review-details-container p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin: 10px 0;
+    }
+
+    .review-details-container strong {
+        font-weight: bold;
+    }
+
+    hr {
+        margin: 30px 0;
+    }
+
+    .review-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .review-actions form {
+        display: inline;
+    }
+
+    .review-actions button {
+        background-color: transparent;
+        border: 1px solid red;
+        color: red;
+        padding: 8px 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .review-actions button:hover {
+        background-color: rgba(255, 0, 0, 0.1);
+    }
+
+    .review-actions a {
+        text-decoration: none;
+        border: 1px solid #ccc;
+        padding: 8px 14px;
+        border-radius: 4px;
+        color: #333;
+        transition: background-color 0.3s ease;
+    }
+
+    .review-actions a:hover {
+        background-color: #f0f0f0;
+    }
+
+    a.back-link {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #0056b3;
+    }
+
+    .performance-info {
+        margin-top: 40px;
+        font-size: 0.9em;
+        color: gray;
+        text-align: center;
+    }
+</style>
+
+<div class="review-details-container">
+    <h2>Отзыв к рецепту "{{review.recipe.name}}"</h2>
+
+    <p><strong>Автор:</strong> {{review.user.name}}</p>
+    <p><strong>Оценка:</strong> {{review.rating}}★</p>
+    <p><strong>Комментарий:</strong></p>
+    <p>{{review.comment}}</p>
+
+    <hr>
+
+    <div class="review-actions">
+        <a href="/recipe-review/{{review.id}}/edit">Редактировать</a>
+        <form action="/recipe-review/{{review.id}}?_method=DELETE" method="POST">
+            <button type="submit">Удалить</button>
+        </form>
+    </div>
+
+    <a href="/recipe/{{review.recipe.id}}" class="back-link">← Назад к рецепту</a>
+
+    <div class="performance-info">
+        <p>Страница сгенерирована за {{elapsedTime}}</p>
+    </div>
+</div>

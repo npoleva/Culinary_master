@@ -1,0 +1,5 @@
+{{#if user}}
+    <p>Вы вошли как {{user.name}} | <a href="/logout">Выйти</a></p>
+{{else}}
+    <a href="/login">Войти</a>
+{{/if}}

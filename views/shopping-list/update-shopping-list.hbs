@@ -1,0 +1,83 @@
+<style>
+    .create-list-wrapper {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: sans-serif;
+    }
+
+    .create-list-wrapper h1 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .create-list-wrapper form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .create-list-wrapper h3 {
+        margin-bottom: 10px;
+    }
+
+    .create-list-wrapper label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .create-list-wrapper input[type="checkbox"] {
+        margin-right: 8px;
+    }
+
+    .create-list-wrapper button {
+        align-self: flex-start;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        background-color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .create-list-wrapper button:hover {
+        background-color: #f0f0f0;
+    }
+
+    .performance-info {
+        margin-top: 40px;
+        font-size: 0.9em;
+        color: gray;
+        text-align: center;
+    }
+</style>
+
+<div class="create-list-wrapper">
+    <h1>Создать новый список покупок</h1>
+    <form method="POST" action="/shopping-list/add-ingredients">
+        <input type="hidden" name="userId" value="{{userId}}">
+
+        <h3>Выберите рецепты:</h3>
+        {{#each recipes}}
+            <label>
+                <input type="checkbox" name="recipeIds" value="{{this.id}}" />
+                {{this.name}} — автор: {{this.author.name}}
+            </label>
+        {{/each}}
+
+        <label for="isCompleted">
+            <input type="checkbox" id="isCompleted" name="isCompleted" value="true" />
+            Завершён
+        </label>
+        <input type="hidden" name="isCompleted" value="false" />
+
+        <button type="submit">Добавить</button>
+    </form>
+
+    <div class="performance-info">
+        <p>Страница сгенерирована за {{elapsedTime}}</p>
+    </div>
+</div>

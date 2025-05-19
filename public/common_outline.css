@@ -1,0 +1,271 @@
+body {
+    font-family: "Roboto Condensed", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdf3e0;
+    color: #3e2723;
+  }
+  
+  header {
+    background-color: #8b4513;
+    padding: 20px;
+    text-align: center;
+    color: white;
+  }
+  
+  header h1 {
+    font-size: 2.5em;
+    margin: 0;
+  }
+  
+  .main_navigation {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    flex-wrap: wrap;
+  }
+  
+  nav a {
+    margin: 0 15px;
+    color: #3e2723;
+    text-decoration: none;
+    font-size: 1.2em;
+    display: flex;
+  }
+  
+  footer {
+    background-color: #3e2723;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+
+  p {
+    display: flex;
+    justify-content: center;
+  }
+
+  nav a.active {
+    font-weight: bold; 
+    color: #ece6e5; 
+    text-decoration: underline; 
+  }
+  
+  nav a:hover {
+    color: #ff6347;
+    text-decoration: underline; 
+  }
+
+.chl {
+  display: flex;
+  margin: 20px;
+  justify-content: center;
+  text-decoration: underline;
+  color: #3e2723;
+}
+
+/*Новое для ингредиента*/
+
+/* Общий контейнер для форм */
+form {
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+  padding: 20px;
+  background-color: #fff8ef;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(62, 39, 35, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Метки */
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Поля ввода и выпадающие списки */
+input[type="text"],
+select {
+  padding: 8px;
+  border: 1px solid #c4a484;
+  border-radius: 5px;
+  font-size: 1em;
+  background-color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Кнопки */
+button,
+.btn {
+  padding: 10px 15px;
+  font-size: 1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+/* Кнопка: Успех */
+.btn-success,
+button[type="submit"].btn-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* Кнопка: Основная */
+.btn-primary,
+button[type="submit"].btn-primary {
+  background-color: #2196f3;
+  color: white;
+}
+
+/* Список ингредиентов */
+li {
+  list-style: none;
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+/* Ссылки на ингредиенты */
+li a {
+  color: #3e2723;
+  text-decoration: none;
+}
+
+li a:hover {
+  text-decoration: underline;
+  color: #ff6347;
+}
+
+/* Инфо о производительности */
+.performance-info {
+  margin-top: 30px;
+  text-align: center;
+  font-style: italic;
+  color: #5d4037;
+}
+
+.logout-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #8b0000;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+  z-index: 1000;
+}
+
+.logout-button:hover {
+  background-color: #a30000;
+}
+
+
+/*Новое для рецептов*/
+/* Секция списка рецептов */
+.recipe {
+  background-color: #fff8ef;
+  border: 1px solid #c4a484;
+  border-radius: 10px;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(62, 39, 35, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.recipe:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(62, 39, 35, 0.15);
+}
+
+.recipe h2 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.recipe h2 a {
+  color: #3e2723;
+  text-decoration: none;
+}
+
+.recipe h2 a:hover {
+  color: #ff6347;
+  text-decoration: underline;
+}
+
+/* Заголовок страницы */
+h1 {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 2.5em;
+}
+
+/* Кнопка "Добавить рецепт" */
+a[href="/recipe/add"] button {
+  display: block;
+  margin: 20px auto;
+  background-color: #ff9800;
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  box-shadow: 0 4px 6px rgba(62, 39, 35, 0.1);
+}
+
+/* Контейнер заголовка и кнопки */
+.recipe-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 40px auto 20px auto;
+  padding: 0 10px;
+}
+
+/* Заголовок */
+.recipe-header h1 {
+  margin: 0;
+  font-size: 2.5em;
+  text-align: left;
+}
+
+/* Убираем подчеркивание у ссылки */
+.recipe-header a {
+  text-decoration: none;
+}
+
+/* Кнопка "Добавить рецепт" */
+.recipe-header button {
+  background-color: #ff9800;
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1.1em;
+  box-shadow: 0 4px 6px rgba(62, 39, 35, 0.1);
+  border: none;
+  cursor: pointer;
+}
+
+.recipe-header button:hover {
+  background-color: #fb8c00;
+}
+.logout-form {
+  display: inline; /* форма не будет занимать отдельную строку */
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+
+
+

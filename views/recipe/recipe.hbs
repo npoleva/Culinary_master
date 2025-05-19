@@ -1,0 +1,149 @@
+<div class="recipe-container">
+    <h1 class="recipe-title">{{recipe.name}}</h1>
+
+    {{#if recipe.imageUrl}}
+        <div class="recipe-image">
+            <img src="{{recipe.imageUrl}}" alt="{{recipe.name}}">
+        </div>
+    {{/if}}
+
+    <p><strong>Описание:</strong> {{recipe.description}}</p>
+    <p><strong>Кухня:</strong> {{recipe.kitchenType}}</p>
+    <p><strong>Время готовки:</strong> {{recipe.cookingTime}} минут</p>
+    <p><strong>Калории:</strong> {{recipe.calories}}</p>
+    <p><strong>Автор:</strong> <a href="/user/{{recipe.author.id}}" class="link">{{recipe.author.name}}</a></p>
+    <p><strong>Рейтинг:</strong> {{recipe.rating}}</p>
+
+    <h2>Ингредиенты:</h2>
+    <ul class="ingredient-list">
+        {{#each recipe.ingredientItems}}
+            <li>{{this.ingredient.name}} — {{this.quantity}} {{this.unit}}</li>
+        {{/each}}
+    </ul>
+
+    <div class="recipe-actions">
+        <form method="POST" action="/recipe/{{recipe.id}}?_method=DELETE">
+            <button type="submit" class="delete-button">Удалить рецепт</button>
+        </form>
+
+        <a href="/recipe/{{recipe.id}}/edit" class="edit-button">Изменить рецепт</a>
+    </div>
+
+    <h2>Отзывы</h2>
+    <p><a href="/recipe-review/list?recipeId={{recipe.id}}" class="link">Посмотреть все отзывы</a></p>
+    <p><a href="/recipe-review/add?recipeId={{recipe.id}}&userId=17adc8ee-219e-46df-b138-a7754257a2ac" class="link">Оставить отзыв</a></p>
+
+    <div class="performance-info">
+        <p>Страница сгенерирована за {{elapsedTime}}</p>
+    </div>
+</div>
+
+<style>
+    .recipe-container {
+        max-width: 620px;
+        margin: 30px auto;
+        padding: 20px 25px;
+        background-color: #fff8f0; /* мягкий бежевый фон */
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(171, 122, 38, 0.15);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #5a3a0a;
+    }
+
+    .recipe-title {
+        text-align: center;
+        font-size: 2.4rem;
+        margin-bottom: 25px;
+        color: #a35a1f;
+        font-weight: 700;
+    }
+
+    .recipe-image {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .recipe-image img {
+        width: 320px;
+        height: 210px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(171, 122, 38, 0.25);
+        transition: transform 0.3s ease;
+    }
+    .recipe-image img:hover {
+        transform: scale(1.05);
+    }
+
+    p strong {
+        color: #b9742a;
+    }
+
+    .ingredient-list {
+        padding-left: 20px;
+        margin-bottom: 25px;
+        color: #7e5516;
+    }
+
+    .ingredient-list li {
+        margin-bottom: 6px;
+        font-size: 1.05rem;
+    }
+
+    .recipe-actions {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    button.delete-button {
+        background-color: #d98c3f;
+        border: 1px solid #b9742a;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.25s ease;
+    }
+    button.delete-button:hover {
+        background-color: #c27c33;
+    }
+
+    a.edit-button {
+        background-color: #d98c3f;
+        border: 1px solid #b9742a;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.25s ease;
+    }
+    a.edit-button:hover {
+        background-color: #c27c33;
+    }
+
+    a.link {
+        color: #b9742a;
+        text-decoration: underline;
+        font-weight: 600;
+    }
+    a.link:hover {
+        color: #a35a1f;
+    }
+
+    .performance-info {
+        margin-top: 40px;
+        font-size: 0.9rem;
+        color: #8c6d3a;
+        text-align: center;
+        font-style: italic;
+    }
+</style>

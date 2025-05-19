@@ -1,0 +1,194 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateIngredientInput {
+  category: IngredientCategory!
+  defaultUnit: String!
+  name: String!
+}
+
+input CreateIngredientItemVOInput {
+  ingredientId: ID!
+  quantity: Float!
+  recipeId: ID
+  unit: String!
+}
+
+input CreateRecipeInput {
+  authorId: String!
+  calories: Int!
+  cookingTime: Int!
+  description: String!
+  imageBase64: String
+  imageUrl: String
+  ingredientItems: [CreateIngredientItemVOInput!]!
+  ingredientsCount: Int!
+  kitchenType: KitchenType!
+  name: String!
+}
+
+input CreateRecipeReviewInput {
+  comment: String
+  rating: Float!
+  recipeId: String!
+  userId: String!
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+"""Категории ингредиентов"""
+enum IngredientCategory {
+  DAIRY
+  EGG
+  FRUIT
+  GRAIN
+  MEAT
+  MUSHROOMS
+  NUTS
+  SOY
+  VEGETABLE
+}
+
+type IngredientItemVOModel {
+  id: String!
+  ingredientId: IngredientModel!
+  quantity: Float!
+  recipeId: String!
+  unit: String!
+}
+
+type IngredientModel {
+  category: IngredientCategory!
+  defaultUnit: String!
+  id: ID!
+  name: String!
+}
+
+enum KitchenType {
+  AMERICAN
+  ASIAN
+  CHINESE
+  EUROPEAN
+  HUNGARIAN
+  ITALIAN
+  MEDITERRANEAN
+  OTHER
+  PORTUGUESE
+  RUSSIAN
+  SPANISH
+}
+
+type Mutation {
+  addIngredientsFromRecipes(recipeIds: [String!]!, userId: String!): ShoppingListModel!
+  createIngredient(input: CreateIngredientInput!): IngredientModel!
+  createRecipe(input: CreateRecipeInput!): RecipeModel!
+  createRecipeReview(createRecipeReviewInput: CreateRecipeReviewInput!): RecipeReviewModel!
+  createUser(input: CreateUserInput!): UserModel!
+  deleteIngredient(id: String!): IngredientModel!
+  deleteRecipe(id: String!): RecipeModel!
+  deleteUser(id: String!): UserModel!
+  getOrCreateShoppingListByUser(userId: String!): ShoppingListModel!
+  removeIngredientFromShoppingList(ingredientId: String!, userId: String!): Boolean!
+  removeRecipeReview(id: String!): RecipeReviewModel!
+  updateIngredient(id: String!, input: UpdateIngredientInput!): IngredientModel!
+  updateRecipe(id: String!, input: UpdateRecipeInput!): RecipeModel!
+  updateRecipeReview(id: String!, updateRecipeReviewInput: UpdateRecipeReviewInput!): RecipeReviewModel!
+  updateUser(id: String!, input: UpdateUserInput!): UserModel!
+}
+
+type Query {
+  getShoppingList(id: String!): ShoppingListModel!
+  ingredient(id: String!): IngredientModel!
+  ingredients(limit: Int = 10, page: Int = 1): [IngredientModel!]!
+  recipe(id: String!): RecipeModel!
+  recipeReview(id: String!): RecipeReviewModel!
+  recipeReviews(limit: Int = 10, page: Int = 1, recipeId: String!): [RecipeReviewModel!]!
+  recipes(limit: Int, page: Int): [RecipeModel!]!
+  user(id: String!): UserModel!
+  users(limit: Int = 10, page: Int = 1): [UserModel!]!
+}
+
+type RecipeModel {
+  author: UserModel!
+  calories: Int!
+  cookingTime: Int!
+  description: String!
+  id: String!
+  imageBase64: String
+  imageUrl: String
+  ingredientItems: [IngredientItemVOModel!]!
+  ingredientsCount: Int!
+  kitchenType: String!
+  name: String!
+  rating: Float!
+  ratings: [RecipeReviewModel!]!
+}
+
+type RecipeReviewModel {
+  comment: String
+  id: String!
+  rating: Float!
+  recipe: RecipeModel!
+  recipeId: String!
+  user: UserModel!
+  userId: String!
+}
+
+type ShoppingListItemVOModel {
+  id: String!
+  ingredient: IngredientModel!
+  isPurchased: Boolean!
+  quantity: Float!
+  unit: String!
+}
+
+type ShoppingListModel {
+  id: String!
+  isCompleted: Boolean!
+  shoppingListItems: [ShoppingListItemVOModel!]!
+  userId: String!
+}
+
+input UpdateIngredientInput {
+  category: IngredientCategory
+  defaultUnit: String
+  name: String
+}
+
+input UpdateRecipeInput {
+  authorId: String
+  calories: Int
+  cookingTime: Int
+  description: String
+  imageBase64: String
+  imageUrl: String
+  ingredientsItems: [CreateIngredientItemVOInput!]
+  kitchenType: KitchenType
+  name: String
+  ratings: [CreateRecipeReviewInput!]
+}
+
+input UpdateRecipeReviewInput {
+  comment: String
+  rating: Float
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
+  password: String
+}
+
+type UserModel {
+  email: String!
+  id: String!
+  name: String!
+  ratings: [RecipeReviewModel!]!
+  recipes: [RecipeModel!]!
+  shoppingLists: [ShoppingListModel!]!
+}

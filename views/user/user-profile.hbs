@@ -1,0 +1,255 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px auto;
+        padding: 0 15px;
+        line-height: 1.5;
+        background-color: #fafafa;
+    }
+
+    h1, h2, h4 {
+        color: #5a4d3e;
+        margin-bottom: 10px;
+    }
+
+    #user-name {
+        font-weight: 700;
+        font-size: 2.2rem;
+        color: #b9742a;
+        display: block;
+        margin-top: 5px;
+    }
+
+    #user-email {
+        font-weight: 500;
+        font-size: 1.1rem;
+        color: #7d7d7d;
+        margin-bottom: 25px;
+        display: block;
+    }
+
+    /* Карточки рецептов */
+    #user-recipes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-left: 0;
+        list-style: none;
+        margin-bottom: 40px;
+    }
+
+    #user-recipes li {
+        background: #fff;
+        border: 2px solid #b9742a;
+        border-radius: 12px;
+        padding: 15px 20px;
+        flex: 1 1 calc(50% - 12px);
+        box-shadow: 0 2px 5px rgba(185, 116, 42, 0.2);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    #user-recipes li:hover {
+        background-color: #b9742a;
+        color: white;
+        border-color: #8c5c1a;
+        box-shadow: 0 4px 10px rgba(140, 92, 26, 0.4);
+    }
+
+    #user-recipes li a {
+        color: inherit;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+    }
+
+    #user-recipes li:hover a {
+        color: white;
+        text-decoration: underline;
+    }
+
+    #user-recipes li::after {
+        content: attr(data-calories) " ккал";
+        display: block;
+        margin-top: 5px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: inherit;
+    }
+
+    /* Стили для ссылок в списках покупок */
+    div.shopping-list a {
+        color: #b9742a;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        transition: border-color 0.3s ease, color 0.3s ease;
+    }
+
+    div.shopping-list a:hover {
+        color: #8c5c1a;
+        border-color: #8c5c1a;
+        text-decoration: none;
+    }
+
+    /* Кнопки для основных действий */
+    .btn-create-recipe,
+    .btn-create-shopping-list,
+    .btn-edit {
+        display: inline-block;
+        margin: 10px 0 20px 0;
+        padding: 10px 25px;
+        border: 2px solid #b9742a;
+        border-radius: 8px;
+        background-color: white;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #b9742a;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 2px 6px rgba(185, 116, 42, 0.15);
+        transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-create-recipe:hover,
+    .btn-create-shopping-list:hover,
+    .btn-edit:hover {
+        background-color: #b9742a;
+        color: white;
+        box-shadow: 0 4px 10px rgba(140, 92, 26, 0.4);
+    }
+
+    /* Ссылка email как кнопка */
+    #user-email {
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    #user-email:hover {
+        background-color: #f3e1b0;
+        color: #8c5c1a;
+        text-decoration: underline;
+    }
+
+    /* Общие стили для всех остальных ссылок */
+    a {
+        color: #b9742a;
+        font-weight: 600;
+        text-decoration: none;
+        border-bottom: 1.5px solid transparent;
+        transition: border-color 0.3s ease, color 0.3s ease;
+    }
+
+    a:hover {
+        color: #8c5c1a;
+        border-color: #8c5c1a;
+        text-decoration: none;
+    }
+
+    /* Контейнеры списков покупок */
+    div.shopping-list {
+        border: 2px solid #b9742a;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        background-color: white;
+        box-shadow: 0 2px 6px rgba(185, 116, 42, 0.15);
+    }
+
+    div.shopping-list h2 {
+        margin-top: 0;
+        color: #b9742a;
+    }
+
+    .performance-info {
+        margin-top: 40px;
+        font-size: 0.85rem;
+        color: gray;
+        text-align: center;
+    }
+
+
+</style>
+
+<h1>Профиль: <span id="user-name">{{user.name}}</span></h1>
+<h4>Email: <span id="user-email">{{user.email}}</span></h4>
+
+<h2>Мои рецепты</h2>
+<ul id="user-recipes">
+    {{#each user.recipes}}
+        <li>
+            <a href="/recipe/{{this.id}}">{{this.name}}</a> – {{this.calories}} ккал
+        </li>
+    {{/each}}
+</ul>
+
+<hr>
+
+{{#each shoppingLists}}
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+        <h2>Список покупок №{{this.id}}</h2>
+        <p><strong>Статус:</strong> {{this.isCompleted}}</p>
+
+        <h4>Ингредиенты:</h4>
+        <ul>
+            {{#each this.shoppingListItems}}
+                <li>{{this.quantity}} {{this.unit}} - {{this.ingredient.name}}</li>
+            {{/each}}
+        </ul>
+    </div>
+{{/each}}
+
+
+<h2>Создать новый рецепт</h2>
+<a href="/recipe/add?authorId={{user.id}}" class="btn-create-recipe">Создать рецепт</a>
+
+<h2>Список покупок</h2>
+<a href="/shopping-list?userId={{user.id}}" class="btn-create-shopping-list">Перейти к списку покупок</a>
+
+
+<h2>Редактировать профиль</h2>
+<hr>
+<a href="/user/{{user.id}}/edit" class="btn-edit">Редактировать профиль</a>
+
+<hr>
+
+<h2>Удалить профиль</h2>
+<form id="delete-form" action="/user/{{user.id}}" method="POST">
+    <button type="submit">Удалить профиль</button>
+</form>
+
+<div class="performance-info">
+    <p>Страница сгенерирована за {{elapsedTime}}ms</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+<script>
+    const eventSource = new EventSource('/user/events');
+    const currentUserId = '{{user.id}}';
+
+
+    eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const user = data.user;
+
+
+        switch(data.type) {
+            case 'USER_UPDATED':
+                document.getElementById('user-name').textContent = user.name;
+                document.getElementById('user-email').textContent = user.email;
+
+                toastr.info(Пользователь обновлен: ${user.name}, 'Изменения сохранены', {
+                progressBar: true,
+                "positionClass": "toast-top-right",
+                "timeOut": 3000
+            });
+
+                break;
+        }
+    };
+</script>

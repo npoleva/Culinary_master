@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma-client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  passwordHash  String
+  recipes       Recipe[]
+  ratings       RecipeReview[]
+  shoppingLists ShoppingList[]
+  favourites    Favourites[]
+  awards        Award[]
+}
+
+model Recipe {
+  id               String             @id @default(uuid())
+  name             String
+  description      String
+  kitchenType      KitchenType
+  cookingTime      Int
+  calories         Int
+  author           User               @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId         String
+  ingredientItems  IngredientItemVO[]
+  ingredientsCount Int
+  rating           Float
+  favourites       Favourites[]
+  ratings          RecipeReview[]
+}
+
+model Ingredient {
+  id                String               @id @default(uuid())
+  name              String
+  defaultUnit       String
+  category          String
+  shoppingListItems ShoppingListItemVO[]
+  IngredientItemVO  IngredientItemVO[]
+}
+
+model IngredientItemVO {
+  id           String     @id @default(uuid())
+  recipe       Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  recipeId     String
+  ingredient   Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  ingredientId String
+  quantity     Float
+  unit         String
+}
+
+model ShoppingList {
+  id                String               @id @default(uuid())
+  user              User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+  shoppingListItems ShoppingListItemVO[]
+  isCompleted       Boolean
+}
+
+model ShoppingListItemVO {
+  id             String       @id @default(uuid())
+  shoppingList   ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+  shoppingListId String
+  ingredient     Ingredient   @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  ingredientId   String
+  quantity       Float
+  unit           String
+  isPurchased    Boolean      @default(false)
+}
+
+model RecipeReview {
+  id       String  @id @default(uuid())
+  userId   String
+  recipeId String
+  rating   Float
+  comment  String?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, recipeId])
+}
+
+model Favourites {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  recipe    Recipe   @relation(fields: [recipeId], references: [id])
+  recipeId  String
+  createdAt DateTime @default(now())
+}
+
+model Award {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  name   String
+}
+
+enum KitchenType {
+  ASIAN
+  EUROPEAN
+  AMERICAN
+  MEDITERRANEAN
+  RUSSIAN
+  CHINESE
+  PORTUGUESE
+  HUNGARIAN
+  ITALIAN
+  SPANISH
+  OTHER
+}

@@ -1,0 +1,30 @@
+<h1>Редактировать ингредиент: {{ingredient.name}}</h1>
+
+<form method="POST" action="/ingredient/{{ingredient.id}}/update">
+    <div>
+        <label for="name">Название:</label>
+        <input type="text" id="name" name="name" value="{{ingredient.name}}" required>
+    </div>
+
+    <div>
+        <label for="category">Категория:</label>
+        <select id="category" name="category" required>
+            <option value="VEGETABLE">Овощи</option>
+            <option value="FRUIT">Фрукты</option>
+            <option value="DAIRY">Молочные продукты</option>
+            <option value="MEAT">Мясо</option>
+            <option value="GRAIN">Зерновые</option>
+        </select><br>
+    </div>
+
+    <div>
+        <label for="defaultUnit">Единица измерения:</label>
+        <input type="text" id="defaultUnit" name="defaultUnit" value="{{ingredient.defaultUnit}}" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+</form>
+
+<div class="performance-info">
+    <p>Страница сгенерирована за {{elapsedTime}}</p>
+</div>

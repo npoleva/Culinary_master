@@ -1,0 +1,110 @@
+<style>
+    .edit-review-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: sans-serif;
+    }
+
+    .edit-review-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="number"],
+    textarea {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        resize: vertical;
+    }
+
+    textarea {
+        min-height: 100px;
+    }
+
+    button[type="submit"] {
+        width: fit-content;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 10px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #f5c6cb;
+    }
+
+    .delete-button {
+        color: red;
+        border: 1px solid red;
+        background-color: transparent;
+        padding: 8px 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        width: fit-content;
+        transition: background-color 0.3s ease;
+    }
+
+    .delete-button:hover {
+        background-color: rgba(255, 0, 0, 0.1);
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #0056b3;
+    }
+
+    .performance-info {
+        margin-top: 40px;
+        font-size: 0.9em;
+        color: gray;
+        text-align: center;
+    }
+
+    hr {
+        margin: 30px 0;
+    }
+</style>
+
+<div class="edit-review-container">
+    <h2>Редактировать отзыв</h2>
+
+    <form action="/recipe-review/{{review.id}}/update" method="POST">
+        <label for="rating">Оценка:</label>
+        <input type="number" name="rating" id="rating" value="{{review.rating}}" min="1" max="5" required>
+
+        <label for="comment">Комментарий:</label>
+        <textarea name="comment" id="comment" rows="4" required>{{review.comment}}</textarea>
+
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <hr>
+
+    <form action="/recipe-review/{{review.id}}?_method=DELETE" method="POST">
+        <button type="submit" class="delete-button">Удалить</button>
+    </form>
+
+    <a href="/recipe-review/{{review.id}}">← Назад к отзыву</a>
+
+    <div class="performance-info">
+        <p>Страница сгенерирована за {{elapsedTime}}</p>
+    </div>
+</div>

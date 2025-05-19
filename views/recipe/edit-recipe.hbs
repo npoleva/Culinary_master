@@ -1,0 +1,329 @@
+<h1>Редактировать рецепт</h1>
+
+<form action="/recipe/{{recipe.id}}/update" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="authorId" value="{{recipe.author.id}}">
+
+    <div>
+        <label for="name">Название рецепта:</label>
+        <input type="text" id="name" name="name" value="{{recipe.name}}" required>
+    </div>
+
+    <div>
+        <label for="description">Описание:</label>
+        <textarea id="description" name="description" required>{{recipe.description}}</textarea>
+    </div>
+
+    <div>
+        <label for="kitchenType">Тип кухни:</label>
+        <select id="kitchenType" name="kitchenType" required>
+            {{#each kitchenTypes}}
+                <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <div>
+        <label for="cookingTime">Время приготовления:</label>
+        <input type="number" id="cookingTime" name="cookingTime" value="{{recipe.cookingTime}}" required>
+    </div>
+
+    <div>
+        <label for="calories">Калории:</label>
+        <input type="number" id="calories" name="calories" value="{{recipe.calories}}" required>
+    </div>
+
+    <div class="image-section">
+        {{#if recipe.imageUrl}}
+            <div class="current-image">
+                <h3>Текущее изображение:</h3>
+                <img src="{{recipe.imageUrl}}" alt="{{recipe.name}}" style="max-width: 200px;">
+                <div>
+                    <input type="checkbox" id="removeImage" name="removeImage">
+                    <label for="removeImage">Удалить изображение</label>
+                </div>
+            </div>
+        {{/if}}
+
+        <div class="new-image">
+            <label for="image">Новое изображение:</label>
+            <input type="file" id="image" name="image">
+            <small>Оставьте пустым, чтобы сохранить текущее</small>
+        </div>
+    </div>
+
+    <button type="button" id="add-ingredient">Добавить ингредиент</button>
+
+    <div>
+        <button type="submit">Сохранить изменения</button>
+    </div>
+</form>
+
+<h3>Ингредиенты:</h3>
+<div id="ingredient-list">
+    {{#each recipe.ingredientItems}}
+        <div class="ingredient-item">
+            <div>{{this.ingredient.name}} {{this.quantity}} {{this.unit}}</div>
+            <form action="/recipe/{{this.id}}/delete-ingredient?_method=DELETE" method="POST">
+                <button type="submit">Удалить</button>
+            </form>
+        </div>
+    {{/each}}
+</div>
+
+<div class="performance-info">
+    <p>Страница сгенерирована за {{elapsedTime}}</p>
+</div>
+
+<style>
+    /*.image-section {*/
+    /*    margin: 20px 0;*/
+    /*    padding: 15px;*/
+    /*    border: 1px solid #ddd;*/
+    /*    border-radius: 5px;*/
+    /*}*/
+
+    /*.current-image {*/
+    /*    margin-bottom: 15px;*/
+    /*}*/
+
+    /*.current-image img {*/
+    /*    display: block;*/
+    /*    margin: 10px 0;*/
+    /*}*/
+
+    /*.ingredient-item {*/
+    /*    display: flex;*/
+    /*    justify-content: space-between;*/
+    /*    align-items: center;*/
+    /*    margin-bottom: 10px;*/
+    /*    padding: 10px;*/
+    /*    border: 1px solid #eee;*/
+    /*}*/
+
+    /*#add-ingredient {*/
+    /*    margin: 15px 0;*/
+    /*    padding: 8px 15px;*/
+    /*    background-color: #f0f0f0;*/
+    /*    border: 1px solid #ddd;*/
+    /*    border-radius: 4px;*/
+    /*    cursor: pointer;*/
+    /*}*/
+
+    /*#add-ingredient:hover {*/
+    /*    background-color: #e0e0e0;*/
+    /*}*/
+    form {
+        max-width: 600px;
+        margin: 0 auto 40px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        font-family: Arial, sans-serif;
+    }
+
+    form > div {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea,
+    input[type="file"] {
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        font-family: inherit;
+        resize: vertical;
+        transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus,
+    input[type="file"]:focus {
+        border-color: #999;
+        outline: none;
+    }
+
+    textarea {
+        min-height: 80px;
+    }
+
+    .image-section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fafafa;
+    }
+
+    .current-image {
+        margin-bottom: 15px;
+    }
+
+    .current-image img {
+        display: block;
+        max-width: 200px;
+        height: auto;
+        margin: 10px 0;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .current-image div {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    .current-image input[type="checkbox"] {
+        margin-right: 6px;
+    }
+
+    button[type="submit"],
+    #add-ingredient {
+        padding: 10px 20px;
+        font-size: 15px;
+        font-weight: 600;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        user-select: none;
+    }
+
+    button[type="submit"]:hover,
+    #add-ingredient:hover {
+        background-color: #e0e0e0;
+    }
+
+    #add-ingredient {
+        margin: 15px 0;
+        display: inline-block;
+    }
+
+    #ingredient-list {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .ingredient-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        background-color: #fafafa;
+        flex-wrap: wrap;
+    }
+
+    .ingredient-item > div {
+        flex: 1 1 auto;
+        font-size: 14px;
+        color: #444;
+        min-width: 180px;
+    }
+
+    .ingredient-item form {
+        margin: 0;
+    }
+
+    .ingredient-item form button {
+        padding: 6px 12px;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: background-color 0.2s;
+    }
+
+    .ingredient-item form button:hover {
+        background-color: #e0e0e0;
+    }
+
+    /* Для динамически добавляемых ингредиентов */
+    #ingredient-list .ingredient-item select,
+    #ingredient-list .ingredient-item input[type="number"],
+    #ingredient-list .ingredient-item input[type="text"] {
+        flex: 1 1 120px;
+        padding: 6px 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    #ingredient-list .ingredient-item button.remove-ingredient {
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: background-color 0.2s;
+    }
+
+    #ingredient-list .ingredient-item button.remove-ingredient:hover {
+        background-color: #e0e0e0;
+    }
+
+    .performance-info {
+        max-width: 600px;
+        margin: 30px auto 10px;
+        font-size: 13px;
+        color: #666;
+        font-style: italic;
+        text-align: center;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const select = document.getElementById('kitchenType');
+        const selectedType = "{{recipe.kitchenType}}";
+        for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === selectedType) {
+                select.options[i].selected = true;
+                break;
+            }
+        }
+
+        document.getElementById('add-ingredient').addEventListener('click', function () {
+            const ingredientList = document.getElementById('ingredient-list');
+            const newItem = document.createElement('div');
+            newItem.classList.add('ingredient-item');
+            newItem.innerHTML = `
+                <select name="ingredientIds[]" required>
+                    {{#each recipe.ingredients}}
+                        <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+                <input type="number" step="0.01" name="quantities[]" required>
+                <input type="text" name="units[]" required>
+                <button type="button" class="remove-ingredient">Удалить</button>
+            `;
+            ingredientList.appendChild(newItem);
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('remove-ingredient')) {
+                e.target.parentElement.remove();
+            }
+        });
+    });
+</script>

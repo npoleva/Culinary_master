@@ -1,0 +1,15 @@
+<h1>{{ingredient.name}}</h1>
+
+<p><strong>Категория:</strong> {{ingredient.category}}</p>
+<p><strong>Единица измерения:</strong> {{ingredient.defaultUnit}}</p>
+
+<a href="/ingredient/{{ingredient.id}}/edit" class="btn btn-primary">Редактировать</a>
+
+<h2>Удалить ингредиент</h2>
+<form action="/ingredient/{{ingredient.id}}?_method=DELETE" method="POST">
+    <button type="submit">Удалить ингредиент</button>
+</form>
+
+<div class="performance-info">
+    <p>Страница сгенерирована за {{elapsedTime}}</p>
+</div>

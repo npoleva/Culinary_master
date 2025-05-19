@@ -1,0 +1,119 @@
+:root {
+    --error-red: #e74c3c;
+    --dark-red: #c0392b;
+    --light-bg: #f9f9f9;
+    --text-dark: #2c3e50;
+    --text-light: #7f8c8d;
+    --white: #ffffff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.6;
+}
+
+.error-wrapper {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px;
+}
+
+.error-header {
+    background: var(--error-red);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.error-title {
+    margin: 0;
+    font-size: 24px;
+}
+
+.error-status {
+    margin-top: 5px;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.error-content {
+    padding: 20px;
+}
+
+.error-message {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.error-details {
+    background: #f8f9fa;
+    border-left: 4px solid var(--error-red);
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.error-stack {
+    font-family: monospace;
+    white-space: pre-wrap;
+    font-size: 13px;
+    color: var(--text-dark);
+}
+
+.error-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+    justify-content: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--error-red);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--dark-red);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #ecf0f1;
+    color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+    background: #dfe6e9;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .error-wrapper {
+        border-radius: 0;
+    }
+}

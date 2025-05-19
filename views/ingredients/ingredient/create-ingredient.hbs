@@ -1,0 +1,103 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 30px auto;
+        padding: 0 15px;
+        color: inherit;
+        background-color: #fff8f0; /* светлый бежевый фон, можно убрать если не нужно */
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #a35a1f; /* коричневато-оранжевый заголовок */
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+        color: #b9742a; /* теплый оранжевый цвет */
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 8px 10px;
+        font-size: 1rem;
+        border: 1px solid #d9b37a; /* светлый бежевый бордер */
+        border-radius: 5px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+        background-color: #fff9f2;
+        color: #5a3a0a; /* темно-коричневый текст */
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+        border-color: #b9742a; /* теплый оранжевый при фокусе */
+        outline: none;
+    }
+
+    .btn {
+        margin-top: 20px;
+        padding: 10px 18px;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: 1px solid #b9742a;
+        background-color: #d98c3f; /* основной теплый оранжево-бежевый цвет */
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #c27c33; /* темнее при наведении */
+        border-color: #a35a1f;
+    }
+
+    .performance-info {
+        margin-top: 40px;
+        font-size: 0.9rem;
+        color: #8c6d3a; /* мягкий коричневатый */
+        text-align: center;
+    }
+</style>
+
+
+
+<h1>Создать новый ингредиент</h1>
+
+<form action="/ingredient" method="POST">
+    <label for="name">Название:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="category">Категория:</label>
+    <select id="category" name="category" required>
+        <option value="VEGETABLE">Овощи</option>
+        <option value="FRUIT">Фрукты</option>
+        <option value="DAIRY">Молочные продукты</option>
+        <option value="MEAT">Мясо</option>
+        <option value="GRAIN">Зерновые</option>
+        <option value="EGG">Яйца и яичные продукты</option>
+        <option value="SOY">Соя и соевые продукты</option>
+        <option value="GREEN">Зелень, травы, листья, салаты</option>
+        <option value="NUTS">Орехи</option>
+        <option value="MUSHROOMS">Грибы</option>
+    </select><br>
+
+    <label for="defaultUnit">Единица измерения:</label>
+    <input type="text" id="defaultUnit" name="defaultUnit" required><br>
+
+    <button type="submit" class="btn btn-success">Создать ингредиент</button>
+</form>
+
+<div class="performance-info">
+    <p>Страница сгенерирована за {{elapsedTime}}</p>
+</div>

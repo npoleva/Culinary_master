@@ -1,0 +1,259 @@
+<form action="/recipe/create" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="authorId" value="{{authorId}}">
+
+    <div>
+        <label for="name">Название рецепта:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+
+    <div>
+        <label for="description">Описание:</label>
+        <textarea id="description" name="description" required></textarea>
+    </div>
+
+    <div>
+        <label for="kitchenType">Тип кухни:</label>
+        <select id="kitchenType" name="kitchenType" required>
+            {{#each kitchenTypes}}
+                <option value="{{this}}">{{this}}</option>
+            {{/each}}
+        </select>
+    </div>
+
+    <div>
+        <label for="cookingTime">Время приготовления (мин):</label>
+        <input type="number" id="cookingTime" name="cookingTime" required>
+    </div>
+
+    <div>
+        <label for="calories">Калории:</label>
+        <input type="number" id="calories" name="calories" required>
+    </div>
+
+    <!-- Секция загрузки изображения -->
+    <div class="image-upload-section">
+        <h3>Изображение рецепта (необязательно)</h3>
+        <input type="file" id="image" name="image" accept="image/jpeg,image/png">
+        <small>Допустимые форматы: JPEG, PNG (макс. 20MB)</small>
+    </div>
+
+    <div id="ingredient-list">
+        <div class="ingredient-item">
+            <label for="ingredient">Ингредиент:</label>
+            <select name="ingredientIds[]" required>
+                {{#each ingredients}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <label for="quantity">Количество:</label>
+            <input type="number" step="0.01" name="quantities[]" required>
+            <label for="unit">Единица измерения:</label>
+            <input type="text" name="units[]" required>
+        </div>
+    </div>
+
+    <button type="button" id="add-ingredient">Добавить ингредиент</button>
+
+    <div>
+        <button type="submit">Создать рецепт</button>
+    </div>
+</form>
+
+<div class="performance-info">
+    <p>Страница сгенерирована за {{elapsedTime}}</p>
+</div>
+
+<script>
+    document.getElementById('add-ingredient').addEventListener('click', function() {
+        const ingredientList = document.getElementById('ingredient-list');
+        const newIngredientItem = document.createElement('div');
+        newIngredientItem.classList.add('ingredient-item');
+        newIngredientItem.innerHTML = `
+            <label for="ingredient">Ингредиент:</label>
+            <select name="ingredientIds[]" required>
+                {{#each ingredients}}
+                    <option value="{{this.id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+            <label for="quantity">Количество:</label>
+            <input type="number" step="0.01" name="quantities[]" required>
+            <label for="unit">Единица измерения:</label>
+            <input type="text" name="units[]" required>
+        `;
+        ingredientList.appendChild(newIngredientItem);
+    });
+</script>
+
+<style>
+    /*.image-upload-section {*/
+    /*    margin: 20px 0;*/
+    /*    padding: 15px;*/
+    /*    border: 1px solid #ddd;*/
+    /*    border-radius: 5px;*/
+    /*}*/
+
+    /*.image-upload-section input[type="file"] {*/
+    /*    margin-top: 10px;*/
+    /*}*/
+
+    /*.ingredient-item {*/
+    /*    margin-bottom: 15px;*/
+    /*    padding: 10px;*/
+    /*    border: 1px solid #eee;*/
+    /*    border-radius: 4px;*/
+    /*}*/
+
+    /*#add-ingredient {*/
+    /*    margin-bottom: 20px;*/
+    /*    padding: 8px 15px;*/
+    /*    background-color: #f0f0f0;*/
+    /*    border: 1px solid #ddd;*/
+    /*    border-radius: 4px;*/
+    /*    cursor: pointer;*/
+    /*}*/
+
+    /*#add-ingredient:hover {*/
+    /*    background-color: #e0e0e0;*/
+    /*}*/
+    form {
+        max-width: 700px;
+        margin: 0 auto 40px auto;
+        padding: 20px;
+        background-color: #fff8ef;
+        border: 1px solid #c4a484;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(62, 39, 35, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    form > div {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    form label {
+        width: 180px;
+        font-weight: bold;
+        color: #3e2723;
+        margin-right: 10px;
+    }
+
+    form input[type="text"],
+    form input[type="number"],
+    form select,
+    form textarea,
+    form input[type="file"] {
+        flex: 1;
+        padding: 8px 10px;
+        border: 1px solid #c4a484;
+        border-radius: 5px;
+        font-size: 1em;
+        color: #3e2723;
+        font-family: inherit;
+    }
+
+    form textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .image-upload-section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fff;
+    }
+
+    .image-upload-section h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #3e2723;
+    }
+
+    .image-upload-section small {
+        display: block;
+        margin-top: 6px;
+        color: #777;
+        font-size: 0.85em;
+    }
+
+    .ingredient-item {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        background-color: #fff;
+    }
+
+    .ingredient-item label {
+        width: 130px;
+        margin: 0;
+        align-self: center;
+    }
+
+    .ingredient-item select,
+    .ingredient-item input[type="number"],
+    .ingredient-item input[type="text"] {
+        flex: 1 1 150px;
+        padding: 6px 8px;
+        border: 1px solid #c4a484;
+        border-radius: 4px;
+        font-size: 0.95em;
+        color: #3e2723;
+    }
+
+    #add-ingredient {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        background-color: #ff9800;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        box-shadow: 0 4px 6px rgba(62, 39, 35, 0.1);
+        transition: background-color 0.2s;
+    }
+
+    #add-ingredient:hover {
+        background-color: #fb8c00;
+    }
+
+    form > div:last-child {
+        text-align: center;
+    }
+
+    form button[type="submit"] {
+        background-color: #ff9800;
+        color: white;
+        font-weight: bold;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2em;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(62, 39, 35, 0.1);
+        transition: background-color 0.2s;
+    }
+
+    form button[type="submit"]:hover {
+        background-color: #fb8c00;
+    }
+
+    .performance-info {
+        max-width: 700px;
+        margin: 0 auto 40px auto;
+        color: #3e2723;
+        font-size: 0.9em;
+        text-align: center;
+    }
+
+</style>

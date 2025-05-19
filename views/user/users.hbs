@@ -1,0 +1,168 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 30px auto;
+        padding: 0 15px;
+        line-height: 1.5;
+        color: inherit;
+    }
+
+    p {
+        font-weight: bold;
+        font-size: 1.25rem;
+        margin-bottom: 15px;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    #users-list {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px; /* расстояние между элементами */
+    }
+
+    #users-list li {
+        background: #fff8e7; /* очень светлый бежевый */
+        border-radius: 12px;
+        padding: 15px 20px;
+        box-shadow: 0 4px 8px rgba(185, 133, 46, 0.15);
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        font-size: 1.15rem;
+        font-weight: 600;
+    }
+
+    #users-list li:hover {
+        box-shadow: 0 8px 16px rgba(185, 133, 46, 0.3);
+        transform: translateY(-3px);
+        background-color: #fff4d1; /* чуть более насыщенный светлый */
+    }
+
+    #users-list li a {
+        color: #b9742a; /* тёмно-оранжевый */
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    #users-list li a:hover {
+        color: #8c5e1a; /* более тёмный оттенок на ховере */
+        text-decoration: underline;
+    }
+
+
+    .performance-info {
+        font-size: 0.9rem;
+        color: gray;
+        text-align: center;
+    }
+    a.register-btn {
+        display: inline-block;
+        padding: 14px 30px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #b9742a; /* тёмно-оранжевый */
+        border: 3px solid #b9742a;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    a.register-btn:hover,
+    a.register-btn:focus {
+        background-color: #b9742a;
+        color: #fff8e7; /* светло-бежевый */
+        outline: none;
+    }
+
+</style>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+
+<p>Пользователи</p>
+<a href="/user/register" class="register-btn">Регистрация</a>
+
+<ul id="users-list">
+    {{#each users}}
+        <li id="user-{{this.id}}">
+            <a href="/user/{{this.id}}">{{this.name}}</a>
+        </li>
+    {{/each}}
+</ul>
+
+<div class="performance-info">
+    <p>Страница сгенерирована за {{elapsedTime}}ms</p>
+</div>
+
+<script>
+    const eventSource = new EventSource('/user/events');
+
+    eventSource.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        const usersList = document.getElementById('users-list');
+
+        switch(data.type) {
+            case 'USER_CREATED':
+                toastr.success(`Новый пользователь: ${data.user.name}`, 'Пользователь зарегистрирован', {
+                    progressBar: true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": 3000
+                });
+
+                const newUserItem = document.createElement('li');
+                newUserItem.id = `user-${data.user.id}`;
+                newUserItem.innerHTML = `<a href="/user/${data.user.id}">${data.user.name}</a>`;
+                usersList.appendChild(newUserItem);
+                break;
+
+            case 'USER_UPDATED':
+                toastr.info(`Пользователь обновлен: ${data.user.name}`, 'Изменения сохранены', {
+                    progressBar: true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": 3000
+                });
+
+                const userItem = document.getElementById(`user-${data.user.id}`);
+                if (userItem) {
+                    userItem.innerHTML = `<a href="/user/${data.user.id}">${data.user.name}</a>`;
+                }
+                break;
+
+            case 'USER_DELETED':
+                toastr.warning(`Пользователь удален: ${data.user.name}`, 'Удаление завершено', {
+                    progressBar: true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": 3000
+                });
+
+                const userToRemove = document.getElementById(`user-${data.user.id}`);
+                if (userToRemove) {
+                    userToRemove.remove();
+                }
+                break;
+        }
+    };
+
+    eventSource.onerror = (error) => {
+        console.error('SSE error:', error);
+        toastr.error('Ошибка подключения к серверу', 'Ошибка', {
+            progressBar: true,
+            "positionClass": "toast-top-right",
+            "timeOut": 3000
+        });
+    };
+</script>

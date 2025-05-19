@@ -1,0 +1,100 @@
+<style>
+    .shopping-list-wrapper {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: sans-serif;
+    }
+
+    .shopping-list-wrapper h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .shopping-list-wrapper p {
+        font-size: 1rem;
+        margin: 5px 0 15px;
+    }
+
+    .shopping-list-wrapper h3 {
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    .shopping-list-wrapper ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .shopping-list-wrapper li {
+        background-color: #f9f9f9;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+
+    .shopping-list-wrapper button {
+        margin-top: 10px;
+        margin-right: 10px;
+        padding: 8px 16px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: white;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .shopping-list-wrapper button:hover {
+        background-color: #f0f0f0;
+    }
+
+    .shopping-list-wrapper a {
+        text-decoration: none;
+    }
+
+    .shopping-list-wrapper a:last-of-type {
+        display: inline-block;
+        margin-top: 25px;
+        font-size: 0.95rem;
+    }
+
+    .performance-info {
+        margin-top: 40px;
+        font-size: 0.9em;
+        color: gray;
+        text-align: center;
+    }
+</style>
+
+<div class="shopping-list-wrapper">
+    <h1>Список покупок</h1>
+
+    <p>Список от пользователя: {{shoppingList.userId}}</p>
+    <p>Статус: {{#if shoppingList.isCompleted}}✅ Завершён{{else}}❌ В процессе{{/if}}</p>
+
+    <h3>Ингредиенты:</h3>
+    <ul>
+        {{#each shoppingList.shoppingListItems}}
+            <li>
+                {{ingredient.name}} — {{quantity}} {{unit}}
+                {{#if isPurchased}} (✔ куплен){{/if}}
+            </li>
+        {{/each}}
+    </ul>
+
+    <a href="/shopping-list/add?userId={{userId}}">
+    <button>Добавить продукты из других рецептов в список</button>
+    </a>
+
+    <a href="/shopping-list/remove-ingredient?userId={{userId}}">
+    <button>Изменить список покупок</button>
+    </a>
+
+    <a href="/user/{{shoppingList.userId}}">⬅ Назад в профиль</a>
+
+    <div class="performance-info">
+        <p>Страница сгенерирована за {{elapsedTime}}</p>
+    </div>
+</div>

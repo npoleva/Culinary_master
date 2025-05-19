@@ -1,0 +1,102 @@
+Table User {
+  id            varchar   [pk]
+  name          varchar
+  email         varchar   [unique]
+  passwordHash  varchar
+}
+
+Table Recipe {
+  id               varchar   [pk]
+  name             varchar
+  description      text
+  kitchenType      enum(KitchenType)
+  cookingTime      int
+  calories         int
+  authorId         varchar
+  ingredientsCount int
+  rating           float
+}
+
+Table Ingredient {
+  id            varchar   [pk]
+  name          varchar
+  defaultUnit   varchar
+  category      varchar
+}
+
+Table IngredientItemVO {
+  id            varchar   [pk]
+  recipeId      varchar
+  ingredientId  varchar
+  quantity      float
+  unit          varchar
+}
+
+Table ShoppingList {
+  id            varchar   [pk]
+  userId        varchar
+  isCompleted   boolean
+}
+
+Table ShoppingListItemVO {
+  id            varchar   [pk]
+  shoppingListId varchar
+  ingredientId  varchar
+  quantity      float
+  unit          varchar
+  isPurchased   boolean   [default: false]
+}
+
+Table RecipeReview {
+  id            varchar   [pk]
+  userId        varchar
+  recipeId      varchar
+  rating        float
+  commentId     varchar
+}
+
+Table Favourites {
+  id        varchar   [pk]
+  userId    varchar
+  recipeId  varchar
+  createdAt timestamp [default: 'now()']
+}
+
+Table Award {
+  id        varchar   [pk]
+  userId    varchar
+  name      varchar
+}
+
+Table Comment {
+  id            varchar   [pk]
+  text          text
+  createdAt     timestamp [default: 'now()']
+  recipeReviewId varchar
+}
+
+Enum KitchenType {
+  ASIAN
+  EUROPEAN
+  AMERICAN
+  MEDITERRANEAN
+  OTHER
+}
+
+Ref: Recipe.authorId > User.id
+Ref: RecipeReview.userId > User.id
+Ref: RecipeReview.recipeId > Recipe.id
+Ref: IngredientItemVO.recipeId > Recipe.id
+Ref: IngredientItemVO.ingredientId > Ingredient.id
+Ref: ShoppingList.userId > User.id
+Ref: ShoppingListItemVO.shoppingListId > ShoppingList.id
+Ref: ShoppingListItemVO.ingredientId > Ingredient.id
+Ref: Favourites.userId > User.id
+Ref: Favourites.recipeId > Recipe.id
+Ref: Award.userId > User.id
+Ref: Comment.recipeReviewId > RecipeReview.id
+
+
+Ref: "Award"."id" < "Award"."userId"
+
+Ref: "ShoppingListItemVO"."id" < "ShoppingListItemVO"."shoppingListId"

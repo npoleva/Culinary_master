@@ -1,0 +1,106 @@
+<style>
+    .reviews-container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: sans-serif;
+    }
+
+    .reviews-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .reviews-container ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .reviews-container li {
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 15px;
+        background-color: #f9f9f9;
+    }
+
+    .reviews-container strong a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .reviews-container em {
+        display: block;
+        margin: 8px 0;
+        color: #555;
+    }
+
+    .reviews-container a {
+        text-decoration: none;
+        color: #0056b3;
+        margin-right: 10px;
+        transition: color 0.2s ease;
+    }
+
+    .reviews-container a:hover {
+        text-decoration: underline;
+    }
+
+    .no-reviews {
+        text-align: center;
+        font-style: italic;
+        color: #777;
+    }
+
+    .leave-review-link {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        padding: 8px 14px;
+        border-radius: 4px;
+        color: #333;
+        transition: background-color 0.3s ease;
+    }
+
+    .leave-review-link:hover {
+        background-color: #f0f0f0;
+    }
+
+    .performance-info {
+        margin-top: 40px;
+        font-size: 0.9em;
+        color: gray;
+        text-align: center;
+    }
+</style>
+
+<div class="reviews-container">
+    <h2>Отзывы к рецепту "{{reviews.[0].recipe.name}}"</h2>
+
+    {{#if reviews.length}}
+        <ul>
+            {{#each reviews}}
+                <li>
+                    <strong>
+                        <a href="/user/{{this.user.id}}">{{this.user.name}}</a>
+                    </strong> — {{this.rating}}★
+                    <em>{{this.comment}}</em>
+                    <a href="/recipe-review/{{this.id}}">Посмотреть</a> |
+                    <a href="/recipe-review/{{this.id}}/edit">Редактировать</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p class="no-reviews">Пока нет отзывов. Будьте первым!</p>
+    {{/if}}
+
+    <a class="leave-review-link" href="/recipe-review/add?recipeId={{recipe.id}}&userId={{user.id}}">
+    Оставить отзыв
+    </a>
+
+    <div class="performance-info">
+        <p>Страница сгенерирована за {{elapsedTime}}</p>
+    </div>
+</div>
