@@ -238,12 +238,10 @@ a[href="/recipe/add"] button {
   text-align: left;
 }
 
-/* Убираем подчеркивание у ссылки */
 .recipe-header a {
   text-decoration: none;
 }
 
-/* Кнопка "Добавить рецепт" */
 .recipe-header button {
   background-color: #ff9800;
   color: white;
@@ -260,10 +258,29 @@ a[href="/recipe/add"] button {
   background-color: #fb8c00;
 }
 .logout-form {
-  display: inline; /* форма не будет занимать отдельную строку */
+  display: inline;
   margin: 0;
   padding: 0;
   border: none;
+}
+
+.auth-links {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.auth-links a {
+  margin-left: 15px;
+  text-decoration: none;
+  color: #d98c3f;
+  font-weight: 600;
+}
+
+.auth-links a:hover {
+  color: #c27c33;
+  text-decoration: underline;
 }
 
 

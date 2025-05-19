@@ -11,8 +11,11 @@
     <script src="https://cdn.jsdelivr.net/npm/topbar@0.1.0/topbar.min.js"></script>
 </head>
 <body>
+<div class="auth-links">
+    <a href="/register">Регистрация</a>
+    <a href="/login">Вход</a>
+</div>
 {{> header }}
-
 <main>
     <p class="user-message">{{userMessage}}</p>
     {{{ body }}}

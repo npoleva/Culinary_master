@@ -1,45 +1,121 @@
-<a href="/recipe/add">
-    <button>Добавить рецепт</button>
-</a>
+<div class="top-bar">
+    <a href="/recipe/add" class="add-button-link">
+        Добавить рецепт
+    </a>
 
-{{#each recipes}}
-    <div class="recipe">
-        <h2><a href="/recipe/{{this.id}}">{{this.name}}</a></h2>
+    <div class="sort-container">
+        <select id="sort-field" onchange="onSortChange()">
+            <option disabled selected value="">Сортировать по...</option>
+            <option value="time">Времени</option>
+            <option value="calories">Калорийности</option>
+            <option value="ingredientsCount">Количеству ингредиентов</option>
+        </select>
+
+        <select id="sort-order" onchange="onSortChange()">
+            <option disabled selected value="">Порядок</option>
+            <option value="asc">По возрастанию</option>
+            <option value="desc">По убыванию</option>
+        </select>
     </div>
-{{else}}
-    <p>Рецептов пока нет:(</p>
-{{/each}}
+</div>
+
+<div class="recipes-list">
+    {{#each recipes}}
+        <div class="recipe">
+            <h2><a href="/recipe/{{this.id}}">{{this.name}}</a></h2>
+        </div>
+    {{else}}
+        <p>Рецептов пока нет:(</p>
+    {{/each}}
+</div>
 
 <div class="performance-info">
     <p>Страница сгенерирована за {{elapsedTime}}</p>
 </div>
 
-a > button {
-text-decoration: none; /* убирает подчеркивание у текста в кнопке */
-border: none;
-background-color: #d98c3f;
-color: white;
-padding: 10px 18px;
-border-radius: 8px;
-cursor: pointer;
-font-weight: 600;
-font-size: 1rem;
-transition: background-color 0.3s ease;
-}
+<script>
+    function onSortChange() {
+        const fieldSelect = document.getElementById('sort-field');
+        const orderSelect = document.getElementById('sort-order');
 
-a > button:hover {
-background-color: #c27c33;
-}
+        const field = fieldSelect.value;
+        const order = orderSelect.value;
 
-/* И для ссылок в заголовках */
-.recipe h2 a {
-text-decoration: none;
-color: #b9742a;
-transition: color 0.3s ease;
-}
+        if (field && order) {
+            const url = `/recipe/sort?field=${field}&order=${order}`;
+            window.location.href = url;
+        }
+    }
+</script>
 
-.recipe h2 a:hover {
-color: #a35a1f;
-text-decoration: underline;
-}
 
+<style>
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .add-button-link {
+        display: inline-block;
+        text-decoration: none;
+        background-color: #d98c3f;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-button-link:hover {
+        background-color: #c27c33;
+    }
+
+    .sort-container {
+        display: flex;
+        gap: 10px;
+    }
+
+    .sort-container select {
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1.5px solid #d98c3f;
+        background-color: white;
+        color: #b9742a;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+        min-width: 180px;
+    }
+
+    .sort-container select:hover,
+    .sort-container select:focus {
+        border-color: #c27c33;
+        outline: none;
+    }
+
+    .recipes-list {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    .recipe h2 a {
+        text-decoration: none;
+        color: #b9742a;
+        transition: color 0.3s ease;
+    }
+
+    .recipe h2 a:hover {
+        color: #a35a1f;
+        text-decoration: underline;
+    }
+
+</style>
